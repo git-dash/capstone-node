@@ -1,7 +1,7 @@
 module.exports = [
     {
         script: './app.js',
-        name: 'product-service',
+        name: 'order-service',
         exec_mode: 'cluster',
         instances: 1,
     }
