@@ -1,0 +1,12 @@
+{
+  "name": "nodemailer-service",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "express": "~4.16.0",
+    "nodemailer": "^6.4.2"
+  }
+}
