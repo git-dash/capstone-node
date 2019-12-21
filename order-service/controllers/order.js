@@ -4,7 +4,8 @@ const orderModel = require('../models/orderModel')(true);
 const logger = require('../middlewares/logger');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
-
+const axios = require('axios');
+ 
 
 const allOrders = async (req, res) => {
 
@@ -107,11 +108,18 @@ const newOrder = async (req, res) => {
             orderAmount: totalPrice,
             food: req.body.food,
             orderStatus: "Order",
+            userEmail: req.body.userEmail
         });
-        let result = await addOrder.save();
+        let savedOrder = await addOrder.save();
         logger.info('added');
-        // logger.info(result);
-        console.log(result);
+        console.log(savedOrder);
+
+        // send message request to the rabitmq-service
+        let rabitMessageServiceResponse =
+            await axios
+                .post(localConfig.dev.rabitMQService, savedOrder);
+        console.log(rabitMessageServiceResponse);
+
 
         res.json({
             data: result

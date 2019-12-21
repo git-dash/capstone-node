@@ -1,6 +1,6 @@
 module.exports = {
     dev: {
-        url: 'mongodb://localhost:27017/capstone'
+        url: 'mongodb://localhost:27017/Capstone'
     },
 
 }

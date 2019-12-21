@@ -1,0 +1,12 @@
+{
+  "name": "rabitmq-service",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "amqplib": "^0.5.5",
+    "express": "~4.16.0"
+  }
+}

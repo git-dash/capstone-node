@@ -14,21 +14,15 @@ const searchRestaurants = async (req, res) => {
         if (Object.keys(req.query).length > 0) {
 
             logger.info(`query strings: ${JSON.stringify(req.query)}`)
-            logger.info(req.query);
 
-            console.log(mongoose.Types.ObjectId.isValid(req.query['id']) + " h " + req.query.hasOwnProperty('id'));
 
-            // if (Object.keys(req.query).length == 1 && req.query.hasOwnProperty('id')) {
+            // console.log(mongoose.Types.ObjectId.isValid(req.query['id']) + " h " + req.query.hasOwnProperty('id'));
 
-            //     searchRestaurants = await SearchModel.findById(req.query['id'])
-
-            // }
-            // else {
             searchRestaurants = await SearchModel.find(
                 {
                     $or: [
 
-                        // { '_id': `ObjectId("${req.query['id']}")` },
+                        { '_id': req.query.id },
                         { "restaurant.user_rating.aggregate_rating": `${req.query['aggregate_rating']}` },
                         { "restaurant.location.city": `${req.query['city']}` },
                         { "restaurant.name": `${req.query['restaurantName']}` },
@@ -38,7 +32,6 @@ const searchRestaurants = async (req, res) => {
                         }
                     ]
                 });
-            // }
         }
         else {
             searchRestaurants = await SearchModel.find({});

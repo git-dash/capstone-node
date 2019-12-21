@@ -11,5 +11,5 @@ module.exports = (app, router) => {
         res.send('hi');
     })
 
-    app.use('/', router)
+    app.use('/api', router)
 }
