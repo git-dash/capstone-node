@@ -11,8 +11,8 @@ module.exports = {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: `somekey`, // generated ethereal user
-                pass: 'somepass' // generated ethereal password
+                user: localConfig.smtpConfig.user, // generated ethereal user
+                pass: localConfig.smtpConfig.pass // generated ethereal password
             }
         });
 
