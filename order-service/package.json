@@ -4,7 +4,22 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "mocha   --timeout 10000 --exit"
+    "test": "mocha --timeout 10000 --exit",
+    "test-dev": "mocha -w --timeout 10000 --exit",
+    "coverage": "nyc --reporter=cobertura --reporter=lcov  npm run test"
+  },
+  "nyc": {
+    "_comment": "Purpose of this part: to do code coverage within Mocha/Chai using Istanbul",
+    "register": "babel-register",
+    "include": [
+      "**/*.js",
+      "./*.js"
+    ],
+    "exclude": [
+      "**/node_modules/**",
+      "**/test/**",
+      "**/coverage/**"
+    ]
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -12,12 +27,15 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.16.4",
+    "express-validator": "^6.3.0",
     "mongoose": "^5.8.1",
     "winston": "^3.2.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "mocha": "^6.2.2"
+    "mocha": "^6.2.2",
+    "nyc": "^15.0.0",
+    "istanbul": "^0.4.5"
   }
 }

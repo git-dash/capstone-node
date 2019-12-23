@@ -6,7 +6,7 @@ let orderRestaurantSchema = new mongoose.Schema({
     restautrantName: String,
     city: String,
     orderAmount: { type: Number, default: 0 },
-    food: { type: [Schema.Types.Mixed] },
+    foods: { type: [Schema.Types.Mixed] },
     orderStatus: { type: String, default: 'Ordered' },
     createdOn: {
         type: Date,

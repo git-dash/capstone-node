@@ -6,15 +6,11 @@ router.post('/notify-email', async (req, res) => {
   console.log(req.body);
 
 
-  let mailRequest = await mailerCtrl.sendMail({
-    to: req.body.to  //'learn.music.med@gmail.com'
-  })
-  console.log(mailRequest);
+  let mailRequest = await mailerCtrl.sendMail(req.body)
+  // console.log(mailRequest);
 
-  res.json({
-    message: `mail sent`,
-    mailInfo: mailRequest
-  })
+  res.status(mailRequest.code).json(mailRequest);
+
 });
 
 module.exports = router;

@@ -5,19 +5,18 @@ var app = express();
 const mongoose = require('mongoose');
 const index = require('./config/config')
 const { corsOptions, corsOrigin } = require('./middlewares/cors-setting');
-
+const logger = require('./middlewares/logger')
 
 app.use(corsOrigin);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
 app.use(corsOptions);
 
-mongoose.connect(index.dev.url, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(index.dev.url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: true })
     .then((result) => {
-        console.log('Database connection successful...');
+        logger.info('Order Service: Database connection successful...');
     }).catch(err => {
-        console.log('Database Connection failed...')
+        logger.error(`Order Service: Database connection successful...${err}`);
     })
 
 

@@ -5,12 +5,12 @@ let should = chai.should();
 let mongoose = require('mongoose');
 let orderModel = require('../models/orderModel');
 chai.use(chaiHttp);
-let dummyObjectId = '';
+var dummyObjectId;
 describe('/Restaurant Order Test', () => {
 
-    it.skip('expecting no orders on test start at the begining', (done) => {
+    it('expecting no orders on test start at the begining', (done) => {
         chai.request(server)
-            .get('/orders')
+            .get('/api/orders')
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
@@ -18,32 +18,23 @@ describe('/Restaurant Order Test', () => {
             });
     });
 
-    it('post test', (done) => {
-        chai.request(server)
-            .post('/test-post')
-            .send({ name: 'hi' })
-            .end((err, res) => {
-                console.log(res.body);
 
-                done();
-            })
-    })
-    it.skip('expecting new order to be placed', (done) => {
+    it('expecting new order to be placed', (done) => {
 
         let testOrder = new mongoose.Types.ObjectId();
 
 
-        let dummyNewOrder = new orderModel({
+        let dummyNewOrder = {
             _id: testOrder,
             restaurantID: 19152549, //5df383e6e0594948f204747a - object id
             restautrantName: `Viluppuram Locality`,
             orderAmount: 960,
-            food: [{ name: 'paneer', quantity: 3, price: 320 }],
-            orderStatus: "Order",
+            foods: [{ name: 'paneer', quantity: 3, price: 320 }],
+            userEmail: 'learn.music.med@gmail.com'
 
-        });
+        };
         chai.request(server)
-            .post('/new-order')
+            .post('/api/new-order')
             .type('application/json')
             .send(dummyNewOrder)
             // .query('id', testOrder)
@@ -52,19 +43,24 @@ describe('/Restaurant Order Test', () => {
                 console.log('post response ', res);
 
                 res.should.have.status(200);
-                res.body.should.be.a('object');
-                // dummyObjectId = res
+
+                res.body.data.mailInfo.message.should.be.eql('Mail Sent Sucessfully');
+                res.body.data.mailInfo.code.should.be.eql(200);
+                res.body.data.orderInfo.orderAmount.should.be.eql(960);
+
+                dummyObjectId = res.body.data.orderInfo._id;
+                // res.body.data.orderInfo._id.should.be.eql(dummyNewOrder._id);
+
                 done();
             });
     });
 
-    it.skip('expecting existing order with id', (done) => {
+    it('expecting newly added order to be exist in the record', (done) => {
 
-        let testOrder = '5df5273090af88519c5f10f2';
         chai.request(server)
-            .get('/search-order')
+            .get('/api/search-order')
 
-            .query('id', testOrder)
+            .query({ 'id': dummyObjectId })
 
             .end((err, res) => {
                 res.should.have.status(200);
@@ -73,13 +69,60 @@ describe('/Restaurant Order Test', () => {
             });
     });
 
-    it.skip('expecting invalid order', (done) => {
+    it('expecting updating new food items for previously added = order', (done) => {
 
-        let testOrder = '5df5273090af88519c5f10f22';
+        chai.request(server)
+            .put(`/api/update-order`)
+            .query({ 'id': dummyObjectId })
+            .send({
+                foods: [{ name: 'paneer', quantity: 4, price: 320 },
+                { name: 'chicken', quantity: 1, price: 220 }],
+
+            })
+
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                done();
+            });
+    });
+
+    it('expecting more foods in previously updated order to be exist in the record', (done) => {
+
+        chai.request(server)
+            .get('/api/search-order')
+
+            .query({ 'id': dummyObjectId })
+
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.data.foods.should.have.length(2);
+                done();
+            });
+    });
+
+    it('expecting more foods in previously updated order to be exist in the record', (done) => {
+
+        chai.request(server)
+            .delete('/api/remove-order')
+
+            .query({ 'id': dummyObjectId })
+
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                // res.body.data.foods.should.have.legth(2);
+                done();
+            });
+    });
+
+    it('expecting invalid order', (done) => {
+
         chai.request(server)
             .get('/order')
 
-            .query('id', testOrder)
+            .query({ 'id': dummyObjectId })
 
             .end((err, res) => {
                 // console.log('data', res.body);
