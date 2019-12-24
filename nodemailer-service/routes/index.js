@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const mailerCtrl = require('../controller/nodemailer-service');
-router.post('/notify-email', async (req, res) => {
+router.post('/nodemailer/notify-email', async (req, res) => {
 
   console.log(req.body);
 

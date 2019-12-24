@@ -40,9 +40,7 @@ const searchRestaurants = async (req, res) => {
         if (searchRestaurants.length > 0) {
             logger.info(`restaurants after search:  ${searchRestaurants.length}`)
             // console.log(searchRestaurants);
-            res.json({
-                data: searchRestaurants
-            })
+            res.json(searchRestaurants)
 
         } else {
 
@@ -58,7 +56,7 @@ const searchRestaurants = async (req, res) => {
         logger.error(error);
         res.status(400)
             .json({
-                error: error
+                error: error.stack
             });
 
     }

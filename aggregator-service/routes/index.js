@@ -3,8 +3,8 @@ var router = express.Router();
 var aggregateService = require('../controller/aggregate-service')
 /* GET home page. */
 
-router.get('/order-total', aggregateService.fetchOrdersTotal);
-router.get('/order-city', aggregateService.fetchAllOrdersFromCity);
-router.get('/city-restaurants', aggregateService.getRestaurantsByCity);
+router.get('/api/aggregate/order-total', aggregateService.fetchOrdersTotal);
+router.get('/api/aggregate/city-based-orders', aggregateService.fetchAllOrdersFromCity);
+router.get('/api/aggregate/city-based-restaurants', aggregateService.getRestaurantsByCity);
 
 module.exports = router;

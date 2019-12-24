@@ -17,7 +17,7 @@ module.exports = {
         });
 
         const mailOptions = {
-            from: 'learn.music.med@gmali.com', // sender address
+            from: localConfig.smtpConfig.user, // sender address
             to: messagePayload.userEmail,// list of receivers
             subject: 'Capstone :Order confirmation Email', // Subject line
             html: `<h3> Your order has been confirmed with capstone - Restaurant: ${messagePayload.restautrantName}  <h3> <br/>

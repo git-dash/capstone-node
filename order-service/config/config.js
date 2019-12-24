@@ -1,7 +1,7 @@
 module.exports = {
     dev: {
         url: 'mongodb://localhost:27017/Capstone',
-        rabitMQService: 'http://localhost:3010/api/notify-email'
+        rabitMQService: 'http://localhost:3010/api/nodemailer/notify-email'
     },
 
     httpResponseStatus: {
