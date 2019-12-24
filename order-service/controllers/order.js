@@ -226,17 +226,18 @@ const updateOrder = async (req, res) => {
         if (ObjectId.isValid(req.query.id)) {
 
             let totalPrice = 0;
-            let newOrderAmount = req.body.foods.forEach(element => {
-                totalPrice = totalPrice + parseInt(element.quantity) * parseFloat(element.price);
+            req.body.foods.forEach(element => {
+                totalPrice = totalPrice + Number(element.quantity) * Number(element.price);
             });
-
+            logger.info(`new food price ${totalPrice}`);
             let updatedOrder = await orderModel.findByIdAndUpdate(req.query.id, {
 
                 $set: {
-                    orderAmount: newOrderAmount,
+                    orderAmount: totalPrice,
                     foods: req.body.foods
                 }
-            })
+            }, { new: true }
+            )
 
             response = responseInterceptor(localConfig.httpResponseStatus.OK.status
                 , localConfig.httpResponseStatus.OK.code, updatedOrder);

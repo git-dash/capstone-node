@@ -4,21 +4,57 @@ admin:
   port: 9876
   host: localhost
 apiEndpoints:
-  api:
+  ip-api:
     host: localhost
     paths: "/ip"
-  restaurant-orders-api:
+  search-restaurant-service-api:
     host: localhost
-    paths: "/orders/"
-  restaurant-single-order-api:
+    paths: "/api/restaurants/search-restaurants"
+  order-service-orders-api:
     host: localhost
-    paths: "/order/"
+    paths: "/api/orders/all/"
+  order-service-search-order-api:
+    host: localhost
+    paths: "/api/orders/search-order/"
+  order-service-new-order-api:
+    host: localhost
+    paths: "/api/orders/new-order/"
+  order-service-update-order-api:
+    host: localhost
+    paths: "/api/orders/update-order/"
+  order-service-remove-order-api:
+    host: localhost
+    paths: "/api/orders/remove-order/"
+  aggregate-service-order-total-api:
+    host: localhost
+    paths: "/api/aggregate/order-total/"
+  aggregate-service-city-total-api:
+    host: localhost
+    paths: "/api/aggregate/city-based-orders/"
+  aggregate-service-city-restaurants-api:
+    host: localhost
+    paths: "/api/aggregate/city-based-restaurants/"
+  nodemailer-service-notify-email-api:
+    host: localhost
+    paths: "/api/nodemailer/notify-email/"
+  rabitmq-service-message-queue-api:
+    host: localhost
+    paths: "/api/message-queue/"
 
 serviceEndpoints:
   httpbin:
     url: "https://httpbin.org"
-  restaurant-order-service-endpoints:
-    url: "http://localhost:3001/"
+  search-restaurant-service-endpoints:
+    url: "http://localhost:3000/"
+  order-service-endpoints:
+    url: "http://localhost:3001"
+  aggregate-service-endpoints:
+    url: "http://localhost:3002/"
+  rabitmq-service-endpoints:
+    url: "http://localhost:3005/"
+  nodemailer-order-service-endpoints:
+    url: "http://localhost:3010/"
+
 policies:
   - basic-auth
   - cors
@@ -29,28 +65,100 @@ policies:
   - proxy
   - rate-limit
 pipelines:
+  aggregate-service-order-total-api-pipeline:
+    apiEndpoints:
+      - aggregate-service-order-total-api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: aggregate-service-endpoints
+              changeOrigin: true
   default:
     apiEndpoints:
-      - api
+      - ip-api
     policies:
       - proxy:
           - action:
               serviceEndpoint: httpbin
               changeOrigin: true
-  restaurant-orders-pipeline:
+  search-restaurant-service-api-pipeline:
     apiEndpoints:
-      - restaurant-orders-api
-    policies:
-    #  - key-auth:
-      - proxy:
-          - action:
-              serviceEndpoint: restaurant-order-service-endpoints
-              changeOrigin: true
-  restaurant-single-order-pipeline:
-    apiEndpoints:
-    - restaurant-single-order-api
+      - search-restaurant-service-api
     policies:
       - proxy:
           - action:
-              serviceEndpoint: restaurant-order-service-endpoints
+              serviceEndpoint: search-restaurant-service-endpoints
               changeOrigin: true
+  order-service-orders-pipeline:
+    apiEndpoints:
+      - order-service-orders-api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: order-service-endpoints
+              changeOrigin: true
+  order-service-search-order-api-pipeline:
+    apiEndpoints:
+      - order-service-search-order-api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: order-service-endpoints
+              changeOrigin: true
+  order-service-new-order-api-pipeline:
+    apiEndpoints:
+      - order-service-new-order-api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: order-service-endpoints
+              changeOrigin: true
+  order-service-update-order-api-pipeline:
+    apiEndpoints:
+      - order-service-update-order-api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: order-service-endpoints
+              changeOrigin: true
+  order-service-remove-order-api-pipeline:
+    apiEndpoints:
+      - order-service-remove-order-api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: order-service-endpoints
+              changeOrigin: true
+  # nodemailer-service-notify-email-api-pipeline:
+  #   apiEndpoints:
+  #     - nodemailer-service-notify-email-api
+  #   policies:
+  #     - proxy:
+  #         - action:
+  #             serviceEndpoint: nodemailer-order-service-endpoints
+  #             changeOrigin: true
+  ## working till above
+  # order-service-update-order-api-pipeline:
+  #   apiEndpoints:
+  #     - order-service-update-order-api
+  #   policies:
+  #     - proxy:
+  #         - action:
+  #             serviceEndpoint: order-service-endpoints
+  #             changeOrigin: true
+  # order-service-remove-order-api-pipeline:
+  #   apiEndpoints:
+  #     - order-service-remove-order-api
+  #   policies:
+  #     - proxy:
+  #         - action:
+  #             serviceEndpoint: order-service-endpoints
+  #             changeOrigin: true
+  # default:
+  #   apiEndpoints:
+  #     - ip-api
+  #   policies:
+  #     - proxy:
+  #         - action:
+  #             serviceEndpoint: httpbin
+  #             changeOrigin: true
