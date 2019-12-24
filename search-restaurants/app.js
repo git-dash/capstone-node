@@ -5,7 +5,7 @@ var app = express();
 const mongoose = require('mongoose');
 const index = require('./config/config')
 const { corsOptions, corsOrigin } = require('./middlewares/cors-setting');
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 
 
 app.use(corsOrigin);
