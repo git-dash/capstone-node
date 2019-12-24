@@ -1,6 +1,6 @@
 module.exports = {
     smtpConfig: {
-        user: `gmailaccount`,
-        pass: 'gmail-pass'
+        user: process.env.user,
+        pass: process.env.pass
     }
 }

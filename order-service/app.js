@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const index = require('./config/config')
 const { corsOptions, corsOrigin } = require('./middlewares/cors-setting');
 const logger = require('./middlewares/logger')
-
+require('dotenv').config();
 app.use(corsOrigin);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

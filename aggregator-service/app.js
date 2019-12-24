@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 
 var indexRouter = require('./routes/index');
-
+require('dotenv').config()
 var app = express();
 
 app.use(express.json());
