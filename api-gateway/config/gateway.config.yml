@@ -65,6 +65,22 @@ policies:
   - proxy
   - rate-limit
 pipelines:
+  rabitmq-service-message-queue-api-pipeline:
+    apiEndpoints:
+      - rabitmq-service-message-queue-api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: rabitmq-service-endpoints
+              changeOrigin: true
+  nodemailer-service-notify-email-api-pipeline:
+    apiEndpoints:
+      - nodemailer-service-notify-email-api
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: nodemailer-order-service-endpoints
+              changeOrigin: true
   aggregate-service-city-based-orders-api-pipeline:
     apiEndpoints:
       - aggregate-service-city-based-orders-api

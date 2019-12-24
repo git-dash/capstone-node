@@ -1,5 +1,5 @@
 module.exports = {
-    rabitMQServiceURL: 'owenrabitmqurl',
+    rabitMQServiceURL: process.env.rabitMQServiceURL,
     orderChannelName: 'purchase-order',
     emailMessageChannelName: 'nodemailer-email-message'
 }

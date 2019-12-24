@@ -12,9 +12,7 @@ router.post('/message-queue', async (req, res) => {
   let orderMessage = messageCtrl.pushMessageToTheQueue(localConfig.orderChannelName, payload);
   console.log(`this is the orderMessage response ${JSON.stringify(orderMessage)}`);
 
-  let emailMessage = messageCtrl.pushMessageToTheQueue(localConfig.emailMessageChannelName, {
-    dummyMessage: 'hi'
-  });
+  let emailMessage = messageCtrl.pushMessageToTheQueue(localConfig.emailMessageChannelName, payload);
   console.log(`this is the emailMessage response ${JSON.stringify(emailMessage)}`);
 
 
