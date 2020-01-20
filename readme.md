@@ -17,5 +17,11 @@ docker commands to run docker image one by one
 4. docker delete service_name
 
 #docker compose
+docker-compose up #at root level
+
+userful commands
+docker system prune  # to clean containers
+
+
 
     

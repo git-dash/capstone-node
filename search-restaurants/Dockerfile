@@ -1,7 +1,7 @@
 FROM node:10
 
 # Create app directory
-WORKDIR /src/search-restaurants
+WORKDIR /search-restaurants
 
 COPY package.json ./
 
@@ -14,5 +14,5 @@ RUN npm install pm2 -g
 COPY . .
 
 EXPOSE 3000
-
-CMD ["pm2", "start", "/src/search-restaurants/pm2.config.js"]
+#CMD ["npm" ,"start"]
+CMD ["pm2", "start", "search-restaurants/pm2.config.js"]

@@ -1,7 +1,7 @@
 FROM node:10
 
 # Create app directory
-WORKDIR /src/order-service
+WORKDIR /order-service
 
 COPY package.json ./
 
@@ -15,4 +15,4 @@ COPY . .
 
 EXPOSE 3001
 
-CMD ["pm2", "start", "/src/order-service/pm2.config.js"]
+CMD ["pm2", "start", "/order-service/pm2.config.js"]

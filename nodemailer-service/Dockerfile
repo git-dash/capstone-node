@@ -1,7 +1,7 @@
 FROM node:10
 
 # Create app directory
-WORKDIR /src/nodemailer-service
+WORKDIR /nodemailer-service
 
 COPY package.json ./
 
@@ -15,4 +15,4 @@ COPY . .
 
 EXPOSE 3010
 
-CMD ["pm2", "start", "/src/nodemailer-service/pm2.config.js"]
+CMD ["pm2", "start", "/nodemailer-service/pm2.config.js"]

@@ -1,7 +1,7 @@
 FROM node:10
 
 # Create app directory
-WORKDIR /src/rabitmq-service
+WORKDIR /rabitmq-service
 
 COPY package.json ./
 
@@ -15,4 +15,4 @@ COPY . .
 
 EXPOSE 3005
 
-CMD ["pm2", "start", "/src/rabitmq-service/pm2.config.js"]
+CMD ["pm2", "start", "/rabitmq-service/pm2.config.js"]
