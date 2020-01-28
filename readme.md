@@ -22,6 +22,12 @@ docker-compose up #at root level
 userful commands
 docker system prune  # to clean containers
 
+steps to run it locally
+1. update nodemail-service/env Gmail SMTP credentials
+2. update rabitmq-service/env url for rabitmqurl
+3. start all services 
+4. use api endponts 
+
 
 
     
